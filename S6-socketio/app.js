@@ -3,7 +3,7 @@ var app= express();
 //création serveur http nestaaamlouh lel handshake
 var server= require ('http').createServer(app);
 var io = require('socket.io')(server);
-
+app.use('/jquery', express.static(__dirname+'/node_modules/jquery/dist/'));
 
 //Create event men chiret server avec .on
 io.on('connection', function(client){
