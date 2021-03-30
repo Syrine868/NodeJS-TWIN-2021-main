@@ -1,0 +1,26 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacts List</title>
+</head>
+<body>
+    <h1> {{title}} </h1>
+    <form method="POST" action="/contact">
+        <fieldset>
+            <legend>Form Contact</legend>
+            <label>FullName</label><br/>
+            <input type="text" name="FullName"  value="{{cont.FullName}}"/>
+            <br/>
+            <label>Phone</label>
+            <input type="number" name="Phone" value="{{cont.Phone}}"/>
+            <button type="submit">
+                Modifier</button>
+        </fieldset>
+    </form>
+   
+
+
+</body>
+</html>

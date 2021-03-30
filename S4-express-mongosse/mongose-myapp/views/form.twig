@@ -1,0 +1,45 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacts List</title>
+</head>
+<body>
+    <h1> Add Contact </h1>
+    <form method="POST" action="/contact">
+        <fieldset>
+            <legend>Form Contact</legend>
+            <label>FullName</label><br/>
+            <input type="text" name="FullName" placeholder="FullName ..."/>
+            <br/>
+            <label>Phone</label>
+            <input type="number" name="Phone" placeholder="Phone..."/>
+            <button type="submit">
+                Ajouter</button>
+        </fieldset>
+    </form>
+    <h1> {{ title }} </h1>
+  
+ 
+    <table border="1">
+        <tr>
+            <th>Full Name</th>
+            <th> Phone </th>
+            <th> Actions</th>
+        </tr>
+        {% for c in con %}
+        <tr>
+            <td> {{ c.FullName }} </td>
+            <td> {{ c.Phone }} </td>
+            <td>
+            <form method="post" action="/contact/update/affiche/{{c._id}}"><button type="submit" value="update"> Update</button></form></td>
+          <td>  <form method="post" action="/contact/delete/{{c._id}}"><button type="submit" value="delete"> Delete</button></form></td>
+
+        </tr>
+        {% endfor %}
+    </table>
+
+
+</body>
+</html>
