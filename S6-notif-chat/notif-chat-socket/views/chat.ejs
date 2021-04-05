@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>SOCKET IO : </h1>
+    <div class="chat-message">    </div>
+        <form id="chatF">
+            <input type="text" id ="msg"/>
+            <button type="submit">Send</button>
+        </form>
+<div class="message">
+    <p class="text"></p>
+    <p id="typing"></p>
+</div>
+    <script src="/jquery/jquery.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+
+    const chatForm= document.getElementById('chatF');
+    const typ= document.getElementById('typing');
+    const msg =document.getElementById('msg');
+
+
+
+    //Demander handskake//1
+    
+    var socket =io.connect('http://localhost:3000/');
+        socket.on('message', function(data){
+            $('body').append('<p>' + data + '</p>');
+        })
+    msg.addEventListener("keyup", function(data){
+        console.log("I'm typing...");
+        socket.emit('im-typing',{
+            isTyping : msg.value.length >0,
+            name:"Syrina"
+        });
+    })
+
+    socket.on("someone-istyping", function(data){
+            const {isTyping, name}= data;
+            if (!isTyping){
+                typ.innerHTML ="";
+                return;
+            }else{
+                typ.innerHTML= `<p> ${name} is typing</p>`;
+            }
+    });
+    chatForm.addEventListener("submit", (e)=>{
+        const msg= e.target.elements.msg.value;
+        const user="Syrina";
+        socket.emit("chat-msg", {
+            msg: msg,
+            user: user
+        });
+        e.target.elements.msg.value = "";
+
+    });
+    socket.on("new-chat-message", (message)=>{
+        const div =document.createElement('div');
+        div.classList.add('message');
+        div.innerHTML= `<p class="text">
+            <span> ${message.user}: ${message.msg}</span>
+            </p>`;
+            document.querySelector(".chat-message").appendChild(div)
+           ;
+           typ.innerHTML=""; 
+    })
+</script>
+</body>
+</html>

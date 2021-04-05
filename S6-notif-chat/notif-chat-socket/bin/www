@@ -29,6 +29,16 @@ io.on('connection', (socket)=>{
   socket.broadcast.emit('message', 'Un nouveau utilisateur s est connecté ! ')
 ;
 
+
+socket.on('im-typing', function(data){
+  console.log("data : "+data);
+  socket.broadcast.emit("someone-istyping",data);
+
+})
+socket.on ("chat-msg", function(data){
+    io.emit("new-chat-message", data)
+})
+
 // Notification system
 socket.on('send-notification',function(data){
   io.emit('new-notification',data);
@@ -93,6 +103,8 @@ function onError(error) {
       throw error;
   }
 }
+
+
 
 /**
  * Event listener for HTTP server "listening" event.
